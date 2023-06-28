@@ -1,0 +1,15 @@
+import secrets
+
+captchaList = []
+
+print(len("03AL8dmw_2wUv-m5WWc-DOoIdFgeZ1GOF6hQvg5-95SqRxrIS5lZXx-Sin30MwAFYKGd9oqce_CR9A5Itf4lZKzXzXb6u8rsnzEpEW9davIZVCs75h6Qx-1TFcEP4C9W2gXRfRa1l7YBGnTy85YJlJefaEarK_5WMtPM8kaeWK7NFiz4o5VJ21KbYYVPMC73ix60EFpCnI1Q3ZRM5Uz2JayOGYQiZCdzblREqRB80haV7Wm9x76_MOMzb85_B_mFYVbe5MBLcxMEfHLubjgLrNp2THEm_TcmyiLrtU_qRCF0HTZBqoMlT2SDqkoFL30TF9kLAdwhU04_Imlu-n5ybRUIZuqs-t0oSdJJMC3VWwwhWKvqTnqosYY7g3IdHsRzeKz_kCYo04MxZ4hlhe94RceM-loKuSL8WQ18hrRSnSvgcWqewco-em0cXZjCtyNvtarFrzpdKAwiVo1ctjKLuWJ1b2t071sUfl6p4VkJPsMwRgQFH5OIChZlK2_khns_qJZlh7akTVlGpDlxobOLU-1_H8vMh021shsnJdH2WPE0wqfwZMdOyCwZ2k6IZDNm6iMawpLG_4i3q9C75OLx1no7JB7QUzl3e5QPOx191DNJYpBMpCKsq-hVwvPuBB1KrmBpcYTZwmBB03"))
+
+
+def generate_random_string():
+    return "03AL8dmw" + secrets.token_urlsafe(484)
+
+for _ in range(5):
+    captchaList.append(generate_random_string())
+
+
+print(captchaList)
