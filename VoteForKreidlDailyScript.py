@@ -562,7 +562,7 @@ def generateProxyListIndices():
         numbers.append(num)
 
     # Print the list of generated numbers.
-    print(numbers)
+    # print(numbers)
     return numbers
 
 def VotesPerDay(proxies_list_indices, proxies_list, responseID):
@@ -573,12 +573,17 @@ def VotesPerDay(proxies_list_indices, proxies_list, responseID):
     # print(f'Run will be delayed for {delayRunStart/60} minutes.')
     # time.sleep(delayRunStart)
 
-    hotVotingPhaseStart = str(random.randint(13, 20))
+    hotVotingPhaseStart = str(random.randint(10, 17))
     hotVotingPhaseOffset = str(random.randint(19,40))
+    hotVotingPhaseStop = str(int(hotVotingPhaseStart) + 1)
+    hotVotingPhaseStopOffset = str(int(hotVotingPhaseOffset)+random.randint(1, 18))
+
     today = date.today()
+    print(f"Hot voting phase will begin at {hotVotingPhaseStart}:{hotVotingPhaseOffset} (Server time: -2)")
+    print(f"Hot voting phase will stop at {hotVotingPhaseStop}:{hotVotingPhaseStopOffset} (Server time: -2)")
 
     for index in proxies_list_indices:
-        
+
         responseID += 1
         proxies = {
             "http": proxies_list[index],
@@ -596,13 +601,13 @@ def VotesPerDay(proxies_list_indices, proxies_list, responseID):
             print(f'Vote {responseID} cast failed. Used Proxy {index} - {proxies_list[index]}')
 
 
-        if responseID % 100 == 0:
+        if responseID % 50 == 0:
             print(f'Vote {responseID}! Time: {datetime.now()}')
-            if datetime.now() > datetime.strptime(f"{hotVotingPhaseStart}:{hotVotingPhaseOffset}:10 {today}", "%H:%M:%S %Y-%m-%d") and datetime.now() < datetime.strptime(f"{hotVotingPhaseStart+1}:{hotVotingPhaseOffset-random.randint(3,17)}:32 {today}", "%H:%M:%S %Y-%m-%d"):
+            if datetime.now() > datetime.strptime(f"{hotVotingPhaseStart}:{hotVotingPhaseOffset}:10 {today}", "%H:%M:%S %Y-%m-%d") and datetime.now() < datetime.strptime(f"{hotVotingPhaseStop}:{hotVotingPhaseStopOffset}:32 {today}", "%H:%M:%S %Y-%m-%d"):
                 print('hot voting phase')
-                timeIntervalBetweenVotes = random.randint(2000, 21000)/1000
+                timeIntervalBetweenVotes = random.randint(2000, 17000)/1000
                 time.sleep(timeIntervalBetweenVotes)
-            elif datetime.now() > datetime.combine(today, datetime.strptime(f"23:{hotVotingPhaseOffset}", "%H:%M").time()):
+            elif datetime.now() > datetime.combine(today, datetime.strptime(f"19:{hotVotingPhaseOffset}", "%H:%M").time()):
                 return print(f'Time up! Number of total votes on {today}: {responseID}')
             else:
                 timeIntervalBetweenVotes = random.randint(6000, 17000)/1000
@@ -612,6 +617,6 @@ def VotesPerDay(proxies_list_indices, proxies_list, responseID):
             time.sleep(timeIntervalBetweenVotes)
 
     return print(f'All votes could be cast! Votes on {today}: {responseID}')
-        
+
 proxyListIndices = generateProxyListIndices()
 VotesPerDay(proxyListIndices, proxies_list, responseID)

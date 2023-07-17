@@ -575,7 +575,13 @@ def VotesPerDay(proxies_list_indices, proxies_list, responseID):
 
     hotVotingPhaseStart = str(random.randint(13, 20))
     hotVotingPhaseOffset = str(random.randint(19,40))
+    votingStopTime = str(random.randint(19, 23))
     today = date.today()
+
+    print(f"{votingStopTime}:{hotVotingPhaseOffset}")
+    print(f"{hotVotingPhaseStart}:{hotVotingPhaseOffset}:10 {today}")
+
+    
 
     for index in proxies_list_indices:
         
@@ -588,28 +594,30 @@ def VotesPerDay(proxies_list_indices, proxies_list, responseID):
         captcha = "03AL8dmw" + secrets.token_urlsafe(484)
         payloadCustomCaptcha = f"-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"voteItem\"\r\n\r\n260318\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"votingId\"\r\n\r\n733\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"g-recaptcha-response\"\r\n\r\n{captcha}\r\n-----011000010111000001101001\r\nContent-Disposition: form-data; name=\"playerOneUp\"\r\n\r\nAbstimmen\r\n-----011000010111000001101001--\r\n"
 
-        response = requests.request("POST", url, data=payloadCustomCaptcha, headers=headers, proxies=proxies)
+        # response = requests.request("POST", url, data=payloadCustomCaptcha, headers=headers, proxies=proxies)
 
-        if 'Set-Cookie' in response.headers:
-            print(f'Vote {responseID} cast successfully. Used Proxy {index} - {proxies_list[index]}')
-        else:
-            print(f'Vote {responseID} cast failed. Used Proxy {index} - {proxies_list[index]}')
+        # if 'Set-Cookie' in response.headers:
+        #     print(f'Vote {responseID} cast successfully. Used Proxy {index} - {proxies_list[index]}')
+        # else:
+        #     print(f'Vote {responseID} cast failed. Used Proxy {index} - {proxies_list[index]}')
 
 
-        if responseID % 100 == 0:
+        if responseID % 77 == 0:
             print(f'Vote {responseID}! Time: {datetime.now()}')
             if datetime.now() > datetime.strptime(f"{hotVotingPhaseStart}:{hotVotingPhaseOffset}:10 {today}", "%H:%M:%S %Y-%m-%d") and datetime.now() < datetime.strptime(f"{hotVotingPhaseStart+1}:{hotVotingPhaseOffset-random.randint(3,17)}:32 {today}", "%H:%M:%S %Y-%m-%d"):
                 print('hot voting phase')
-                timeIntervalBetweenVotes = random.randint(2000, 21000)/1000
+                timeIntervalBetweenVotes = random.randint(4000, 42000)/1000
                 time.sleep(timeIntervalBetweenVotes)
-            elif datetime.now() > datetime.combine(today, datetime.strptime(f"23:{hotVotingPhaseOffset}", "%H:%M").time()):
+            elif datetime.now() > datetime.combine(today, datetime.strptime(f"{votingStopTime}:{hotVotingPhaseOffset}", "%H:%M").time()):
                 return print(f'Time up! Number of total votes on {today}: {responseID}')
             else:
                 timeIntervalBetweenVotes = random.randint(6000, 17000)/1000
                 time.sleep(timeIntervalBetweenVotes)
         else:
-            timeIntervalBetweenVotes = random.randint(6000, 17000)/1000
+            timeIntervalBetweenVotes = random.randint(12000, 34000)/1000
             time.sleep(timeIntervalBetweenVotes)
+        
+        print(timeIntervalBetweenVotes)
 
     return print(f'All votes could be cast! Votes on {today}: {responseID}')
         
